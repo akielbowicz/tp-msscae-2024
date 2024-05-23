@@ -15,7 +15,7 @@
 - Seguir los pasos de configuracion de un ambiente local
 - Crear un nuevo kernel de jupyter con el ambiente recien creado `python -m ipykernell --user --name TPMSSCAE`
 - Refescar el navegador
-- Abrir un notebook y seleccionar el kernel `Kernel` -> `Change kernel` -> `TPMSSCAR` (por default usa Python 3)
+- Abrir un notebook y seleccionar el kernel `Kernel` -> `Change kernel` -> `TPMSSCAE` (por default usa Python 3)
 
 
 # Contenidos
