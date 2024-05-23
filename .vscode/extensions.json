@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "christian-kohler.path-intellisense",
+        "ms-toolsai.jupyter"
+    ]
+}
