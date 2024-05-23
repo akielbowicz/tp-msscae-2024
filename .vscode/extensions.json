@@ -2,6 +2,8 @@
     "recommendations": [
         "ms-python.python",
         "christian-kohler.path-intellisense",
-        "ms-toolsai.jupyter"
+        "ms-toolsai.jupyter",
+        "yzane.markdown-pdf",
+        "davidanson.vscode-markdownlint"
     ]
 }
