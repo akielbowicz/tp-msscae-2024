@@ -12,6 +12,8 @@
 
 ### En el [Jupyter DC UBA](https://jupyter.dc.uba.ar/)
 
+Para poder instalar paquetes en un ambiente virtual y no tener problemas de permisos
+
 - Seguir los pasos de configuracion de un ambiente local
 - Crear un nuevo kernel de jupyter con el ambiente recien creado `python -m ipykernell --user --name TPMSSCAE`
 - Refescar el navegador
