@@ -1,5 +1,5 @@
 # Trabajo Práctico de MSSCAE 2024 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/akielbowicz/tp-msscae-2024/blob/master/notebooks/MIP.ipynb]
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/akielbowicz/tp-msscae-2024/blob/main/notebooks/MIP.ipynb]
 
 # Como usar el repo
 
