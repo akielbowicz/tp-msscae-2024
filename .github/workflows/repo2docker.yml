@@ -3,6 +3,7 @@ on:
   push: # You may want to trigger this Action on other things than a push.
     branches: 
       - main
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
