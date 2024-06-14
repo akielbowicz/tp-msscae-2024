@@ -1,0 +1,1 @@
+FROM FROM ghcr.io/akielbowicz/msscae2024g6:latest
