@@ -19,3 +19,4 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PAT }}
         DOCKER_REGISTRY: "ghcr.io"
         IMAGE_NAME: "msscae2024g6"
+        BINDER_CACHE: true
