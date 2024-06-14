@@ -16,7 +16,7 @@ jobs:
       uses: jupyterhub/repo2docker-action@master
       with:
         DOCKER_USERNAME: ${{ github.repository_owner }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PAT }}
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_REGISTRY: "ghcr.io"
         IMAGE_NAME: "akielbowicz/msscae2024g6"
         BINDER_CACHE: true
