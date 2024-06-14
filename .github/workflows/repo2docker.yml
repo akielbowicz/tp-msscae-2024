@@ -1,6 +1,8 @@
 name: Build Container Image and push to gcr.io
-on: [push] # You may want to trigger this Action on other things than a push.
-branch: main
+on: 
+  push: # You may want to trigger this Action on other things than a push.
+    branches: 
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
