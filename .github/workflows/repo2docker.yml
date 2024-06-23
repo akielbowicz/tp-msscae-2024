@@ -1,0 +1,30 @@
+name: Build Container Image and push to gcr.io
+on: 
+  push: # You may want to trigger this Action on other things than a push.
+    branches: 
+      - main
+    paths:
+      - 'notebooks/**'
+      - 'src/**'
+      - requirements.txt
+      
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+
+    - name: checkout files in repo
+      uses: actions/checkout@main
+
+    - name: update jupyter dependencies with repo2docker
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ github.repository_owner }}
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_REGISTRY: "ghcr.io"
+        IMAGE_NAME: "akielbowicz/msscae2024g6"
+        BINDER_CACHE: true

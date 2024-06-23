@@ -1,2 +1,3 @@
 jupyterlab
 quantecon_book_networks
+jupyterlab-rise
