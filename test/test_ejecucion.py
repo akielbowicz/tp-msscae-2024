@@ -1,8 +1,8 @@
 import init
 import sys
 print(sys.path)
-import agentes
+import experimento
 
 
 def test_ejecucion():
-    assert agentes.ejemplo("ASD") == 2
+    assert experimento.ejemplo("ASD") == 2
