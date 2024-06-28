@@ -10,8 +10,8 @@ def armar_grafo(dataframe, precios_random=True):
     for (k, v) in row.items():
       d[k] = {"w":v}
     graph[index] = d
-  G_base = nx.MultiDiGraph(graph)
-  G = nx.MultiDiGraph(graph)
+  G_base = nx.DiGraph(graph) #Cambio a digrafo para los plots
+  G = nx.DiGraph(graph)
   for (n1,n2,d) in G_base.edges(data=True):
     if d['w'] == 0:
       G.remove_edge(n1,n2)
