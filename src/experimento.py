@@ -12,7 +12,7 @@ class Experimento:
 
     Parámetros
     ----------
-    grafo : MultiDiGraph
+    grafo : DiGraph
       Grafo que representa el MIP
     dinamica : Callable 
       Función con la siguiente signatura : (aumento, peso_arista, inflacion, alpha)
@@ -32,7 +32,8 @@ class Experimento:
     self.dinamica = dinamica
     self.metricas = metricas or {}
     self._curr_step = 0
-    self._metricas_evaluadas = {nombre:[] for nombre in self.metricas}
+    self.metricas_evaluadas = {nombre:[] for nombre in self.metricas}
+    self.metricas_evaluadas['inflacion'] = []
     self.queue = queue.Queue() #Fila de tuplas (Nodo, aumento)
     self.duracion_periodo = duracion_periodo
     self.precios_periodo_pasado = {}
@@ -40,7 +41,7 @@ class Experimento:
       self.precios_periodo_pasado[nodo] = self.grafo.nodes[nodo]['precio']
 
     self._calc_inflacion = calcular_inflacion or (lambda actual, pasado: 0.0)
-    self.inflacion = 0 # Expresada en %.
+    self.inflacion = 0 # Expresada en %. (50 para 50%, 12 para 12%)
     assert 0.0 <= alpha <= 1.0
     self.alpha = alpha
 
@@ -62,11 +63,11 @@ class Experimento:
         self._calcular_metricas()
         self._curr_step += 1
 
-  def actualizar(self, vecino, aumento):
+  def actualizar(self, vecino, aumento):   
     nodo_vecino = vecino[0]
     precio_actual = self.grafo.nodes[nodo_vecino]['precio']
-    peso_arista = vecino[1][0]['w']
-    aumento_vecino = self.dinamica(aumento, peso_arista,self.inflacion, self.alpha)
+    peso_arista = vecino[1]['w']
+    aumento_vecino = self.dinamica(aumento, peso_arista, self.inflacion, self.alpha)
     nuevo_precio = {nodo_vecino : {'precio':  (precio_actual * (1 + (aumento_vecino / 100)))}}
     nx.set_node_attributes(self.grafo, nuevo_precio)
     return aumento_vecino
@@ -88,13 +89,13 @@ class Experimento:
   def actualizar_inflacion(self): 
       precios_periodo_actual = {}
       for nodo in self.grafo.nodes:
-        precios_periodo_actual[nodo] = self.grafo.nodes[nodo]['precio']
+        precios_periodo_actual[nodo] = self.grafo.nodes[nodo]['precio']      
       self.inflacion = self._calc_inflacion(precios_periodo_actual.values(), self.precios_periodo_pasado.values())
       self.precios_periodo_pasado = precios_periodo_actual.copy()
-
   def _calcular_metricas(self):
+    self.metricas_evaluadas['inflacion'].append(self.inflacion)
     for nombre, metrica in self.metricas.items():
-          self._metricas_evaluadas[nombre].append(metrica(self.grafo))
+          self.metricas_evaluadas[nombre].append(metrica(self.grafo))
 
   def __str__(self):
       return str(self.to_dict())

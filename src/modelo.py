@@ -3,12 +3,12 @@ def dinamica_1(aumento, peso_arista, inflacion=0.0, alpha=1.0):
     aumento_vecino = aumento * peso_arista
     return aumento_vecino
 
-def dinamica_2(aumento, peso_arista, inflacion=0.0, alpha=1.0):
-    aumento_vecino = aumento * (1 + inflacion/100)
+def dinamica_2(aumento, peso_arista, inflacion, alpha=1.0):
+    aumento_vecino = inflacion
     return aumento_vecino
     
-def dinamica_3(aumento, peso_arista, inflacion=0.0, alpha=1.0):
-    aumento_vecino = (alpha * inflacion) + ((1 -alpha) * (aumento * peso_arista))
+def dinamica_3(aumento, peso_arista, inflacion, alpha):
+    aumento_vecino = (alpha * inflacion) + ((1 - alpha) * ((aumento) * peso_arista))
     return aumento_vecino
 
 
