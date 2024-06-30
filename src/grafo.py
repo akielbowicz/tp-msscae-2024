@@ -2,6 +2,10 @@ import itertools as it
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
+import quantecon_book_networks
+import quantecon_book_networks.input_output as qbn_io
+import quantecon_book_networks.plotting as qbn_plt
+import quantecon_book_networks.data as qbn_data
 
 def armar_grafo(dataframe, precios_random=True):
   graph = {}
@@ -73,3 +77,62 @@ def plot_grafo(grafo, labels=True, grande=False, node_data=True,):
           ax=ax,
       )
 
+
+# %%
+def verGrafoCentralizado(G,df):
+    ig, ax = plt.subplots(figsize=(40, 40))
+    plt.axis("off")
+    N = len(G)
+    centrality = nx.eigenvector_centrality(G, max_iter=1000)  # Funcion para sacar colores lindos para el grafo.
+    values = np.array(list(centrality.values()))
+    norm_values = (values - values.min()) / (values.max() - values.min())
+
+    colores_nodo = plt.cm.viridis(norm_values)
+
+    grado_nodo = np.array([G.out_degree[(sector)] for sector in df.columns])
+    tamaños_nodo = 400 + (grado_nodo * 200)
+    edge_widths = qbn_io.normalise_weights(qbn_io.edge_weights(G), 10)
+
+    node_colors = qbn_io.colorise_weights(list(centrality), beta=False)
+    node_to_color = dict(zip(G.nodes, node_colors))
+    edge_colors = []
+    for src, _ in G.edges:
+        edge_colors.append(node_to_color[src])
+
+    pos_nodos = nx.spring_layout(G)
+
+    nx.draw_networkx_nodes(G,
+                           pos_nodos,
+                           node_color=colores_nodo,
+                           node_size=tamaños_nodo,
+                           edgecolors='grey',
+                           linewidths=10,
+                           alpha=0.6,
+                           ax=ax
+                           )
+
+    nx.draw_networkx_edges(G,
+                           pos_nodos,
+                           edge_color=edge_colors,
+                           width=edge_widths,
+                           arrows=True,
+                           arrowsize=5,
+                           alpha=0.6,
+                           ax=ax,
+                           arrowstyle='->',
+                           node_size=10,
+                           connectionstyle='arc3,rad=0.15')
+
+    nx.draw_networkx_labels(G,
+                            pos_nodos,
+                            font_size=17,
+                            ax=ax,
+                            labels=None
+                            )
+
+    sm = plt.cm.ScalarMappable(cmap=plt.cm.viridis, norm=plt.Normalize(vmin=values.min(), vmax=values.max()))
+    sm.set_array([])
+    cbar = plt.colorbar(sm, ax=ax, font_size=15)
+    cbar.set_label('Influencia', font_size=15)
+
+    plt.show()
