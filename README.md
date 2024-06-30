@@ -25,4 +25,6 @@ Para poder instalar paquetes en un ambiente virtual y no tener problemas de perm
 [Modelo Conceptual](docs/modelo_conceptual.md)
 
 [Notebook MIP.ipynb](notebooks/MIP.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/akielbowicz/tp-msscae-2024/blob/main/notebooks/MIP.ipynb) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/akielbowicz/tp-msscae-2024/HEAD?labpath=notebooks%2FMIP.ipynb)
+
+[Notebook exposicion.ipynb](notebooks/exposicion.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/akielbowicz/tp-msscae-2024/blob/main/notebooks/exposicion.ipynb) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/akielbowicz/tp-msscae-2024/HEAD?labpath=notebooks%2Fexposicion.ipynb)
  
