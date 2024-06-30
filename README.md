@@ -32,13 +32,13 @@ Para poder instalar paquetes en un ambiente virtual y no tener problemas de perm
 ## Cómo generar los documentos estáticos
 
 ```shell
-jupyter nbconvert ./notebooks/exposicion.ipynb --to html --output-dir diapositivas
-jupyter nbconvert ./notebooks/exposicion.ipynb --to slides --output-dir diapositivas
+jupyter nbconvert ./notebooks/exposicion.ipynb --to html --output-dir docs/diapositivas
+jupyter nbconvert ./notebooks/exposicion.ipynb --to slides --output-dir docs/diapositivas
 ```
 
 Para exportar a PDF es necesario tener un motor de [`TeX`](https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex) (en Windows lo más sencillo es `scoop install main/miktex`)
 
 ```shell
-jupyter nbconvert ./notebooks/exposicion.ipynb --to pdf --output-dir diapositivas
+jupyter nbconvert ./notebooks/exposicion.ipynb --to pdf --output-dir docs/diapositivas
 ```
 
