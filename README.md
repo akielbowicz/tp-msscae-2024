@@ -28,3 +28,16 @@ Para poder instalar paquetes en un ambiente virtual y no tener problemas de perm
 
 [Notebook exposicion.ipynb](notebooks/exposicion.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/akielbowicz/tp-msscae-2024/blob/main/notebooks/exposicion.ipynb) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/akielbowicz/tp-msscae-2024/HEAD?labpath=notebooks%2Fexposicion.ipynb)
  
+## Cómo generar los documentos estáticos
+
+```shell
+jupyter nbconvert ./notebooks/exposicion.ipynb --to html --output-dir diapositivas
+jupyter nbconvert ./notebooks/exposicion.ipynb --to slides --output-dir diapositivas
+```
+
+Para exportar a PDF es necesario tener un motor de [`TeX`](https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex)
+
+```shell
+jupyter nbconvert ./notebooks/exposicion.ipynb --to pdf --output-dir diapositivas
+```
+
