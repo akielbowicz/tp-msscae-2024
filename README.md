@@ -1,6 +1,6 @@
 # Trabajo Práctico de MSSCAE 2024 
 
-[Diapositivas online](https://akielbowicz.github.io/tp-msscae-2024)
+[Diapositivas online](https://akielbowicz.github.io/tp-msscae-2024/diapositivas)
 
 # Como usar el repo
 
