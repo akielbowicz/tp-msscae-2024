@@ -1,5 +1,6 @@
 # Trabajo Práctico de MSSCAE 2024 
 
+[Diapositivas online](https://akielbowicz.github.io/tp-msscae-2024)
 
 # Como usar el repo
 
@@ -35,7 +36,7 @@ jupyter nbconvert ./notebooks/exposicion.ipynb --to html --output-dir diapositiv
 jupyter nbconvert ./notebooks/exposicion.ipynb --to slides --output-dir diapositivas
 ```
 
-Para exportar a PDF es necesario tener un motor de [`TeX`](https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex)
+Para exportar a PDF es necesario tener un motor de [`TeX`](https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex) (en Windows lo más sencillo es `scoop install main/miktex`)
 
 ```shell
 jupyter nbconvert ./notebooks/exposicion.ipynb --to pdf --output-dir diapositivas
