@@ -1,4 +1,7 @@
+Pueden encontrar el [notebook](https://github.com/akielbowicz/tp-msscae-2024/blob/main/notebooks/exposicion.ipynb) de la presentación en los siguientes formatos
 
-[Notebook](./exposicion.html)
+[HTML](./exposicion.html)
 
-[Slides](./exposicion.slides.html)
+[Slides HTML](./exposicion.slides.html)
+
+[PDF](./exposicion.pdf)
