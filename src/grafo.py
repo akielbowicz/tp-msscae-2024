@@ -213,8 +213,8 @@ def verGrafoAbierto(df):
     return fig
 
 
-def verInflacion(df, precios_finales, precios_iniciales):
-    fig, ax = plt.subplots(figsize=(25, 25))
+def verInflacion(df, precios_finales, precios_iniciales, figsize=(15, 15)):
+    fig, ax = plt.subplots(figsize=figsize)
     plt.axis("off")
 
     G = nx.DiGraph()
@@ -238,7 +238,8 @@ def verInflacion(df, precios_finales, precios_iniciales):
     max_change = 500
     min_change = 0
     norm_changes = (price_changes - min_change) / (max_change - min_change)
-
+    tamanos_nodo = 50 + (grado_nodo * 2)
+    tamanos_nodo.tolist()
     colors = plt.cm.Reds(norm_changes)
 
     pos_nodos = nx.spring_layout(G)
@@ -246,7 +247,7 @@ def verInflacion(df, precios_finales, precios_iniciales):
     nx.draw_networkx_nodes(G,
                            pos_nodos,
                            node_color=colors,
-                           node_size=90,
+                           node_size=tamanos_nodo,
                            edgecolors=colors,
                            linewidths=10,
                            alpha=1,
