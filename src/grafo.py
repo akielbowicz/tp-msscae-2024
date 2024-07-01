@@ -118,7 +118,7 @@ def verGrafoCentralizado(df):
                            edge_color=edge_colors,
                            width=edge_widths,
                            arrows=True,
-                           arrowsize=5,
+                           arrowsize=edge_widths,
                            alpha=0.6,
                            ax=ax,
                            arrowstyle='->',
@@ -190,7 +190,7 @@ def verGrafoAbierto(df):
                            edge_color=colores_nodo,
                            width=edge_widths,
                            arrows=True,
-                           arrowsize=5,
+                           arrowsize=edge_widths,
                            alpha=0.6,
                            ax=ax,
                            arrowstyle='->',
@@ -235,20 +235,18 @@ def verInflacion(df, precios_finales, precios_iniciales):
     grado_nodo = np.array([G.out_degree[(sector)] for sector in df.columns])
     price_changes = np.array(precios_finales) - np.array(precios_iniciales)
 
-    max_change = max(price_changes)
-    min_change = min(price_changes)
+    max_change = 500
+    min_change = 0
     norm_changes = (price_changes - min_change) / (max_change - min_change)
 
     colors = plt.cm.Reds(norm_changes)
-    tamaños_nodo = 400 + (grado_nodo * 200)
-    tamaños_nodo.tolist()
 
     pos_nodos = nx.spring_layout(G)
 
     nx.draw_networkx_nodes(G,
                            pos_nodos,
                            node_color=colors,
-                           node_size=tamaños_nodo,
+                           node_size=90,
                            edgecolors=colors,
                            linewidths=10,
                            alpha=1,
@@ -258,9 +256,9 @@ def verInflacion(df, precios_finales, precios_iniciales):
     nx.draw_networkx_edges(G,
                            pos_nodos,
                            edge_color='gray',
-                           width=1,
+                           width=edge_widths,
                            arrows=True,
-                           arrowsize=5,
+                           arrowsize=edge_widths,
                            alpha=0.6,
                            ax=ax,
                            arrowstyle='->',
@@ -273,13 +271,12 @@ def verInflacion(df, precios_finales, precios_iniciales):
                             ax=ax
                             )
 
-    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=min_change, vmax=max_change))
+    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=0, vmax=500))
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax)
     cbar.set_label('Variación de precios', fontsize=10)
-    plt.title('Variación de la inflación en los sectores')
-
     plt.show()
+
     return fig
 
 def graficar_dist_grados(G, columns):
