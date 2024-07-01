@@ -213,7 +213,7 @@ def verGrafoAbierto(df):
     return fig
 
 
-def verInflacion(df, precios_finales, precios_iniciales, figsize=(15, 15)):
+def verInflacion(df, precios_finales, precios_iniciales, figsize=(25, 25)):
     fig, ax = plt.subplots(figsize=figsize)
     plt.axis("off")
 
