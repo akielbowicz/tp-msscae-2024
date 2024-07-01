@@ -235,8 +235,8 @@ def verInflacion(df, precios_finales, precios_iniciales, figsize=(15, 15)):
     grado_nodo = np.array([G.out_degree[(sector)] for sector in df.columns])
     price_changes = np.array(precios_finales) - np.array(precios_iniciales)
 
-    max_change = 500
-    min_change = 0
+    max_change = max(price_changes)
+    min_change = min(price_changes)
     norm_changes = (price_changes - min_change) / (max_change - min_change)
     tamanos_nodo = 50 + (grado_nodo * 2)
     tamanos_nodo.tolist()
@@ -272,7 +272,7 @@ def verInflacion(df, precios_finales, precios_iniciales, figsize=(15, 15)):
                             ax=ax
                             )
 
-    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=0, vmax=500))
+    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=min_change, vmax=max_change))
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax)
     cbar.set_label('Variación de precios', fontsize=10)
