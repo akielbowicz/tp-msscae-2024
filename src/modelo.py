@@ -23,3 +23,8 @@ def calcular_inflacion(precios_periodo_actual, precios_periodo_pasado):
     ipc_pasado = sum(precios_periodo_pasado) / len(precios_periodo_pasado)
     inflacion = ((ipc_actual / ipc_pasado) - 1)  * 100
     return inflacion
+
+# Para refactor
+dinamica_local = dinamica_1
+dinamica_global = dinamica_2
+dinamica_mixta = dinamica_3
