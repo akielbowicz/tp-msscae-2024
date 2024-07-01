@@ -79,17 +79,19 @@ def plot_grafo(grafo, labels=True, grande=False, node_data=True,):
 
 
 # %%
-def verGrafoCentralizado(G,df):
+
+def verGrafoCentralizado(df):
     ig, ax = plt.subplots(figsize=(40, 40))
     plt.axis("off")
-    N = len(G)
-    centrality = nx.eigenvector_centrality(G, max_iter=1000)  # Funcion para sacar colores lindos para el grafo.
+    G = nx.DiGraph(df)
+
+    centrality = nx.eigenvector_centrality(G, max_iter=1000)
     values = np.array(list(centrality.values()))
     norm_values = (values - values.min()) / (values.max() - values.min())
 
     colores_nodo = plt.cm.viridis(norm_values)
 
-    grado_nodo = np.array([G.out_degree[(sector)] for sector in df.columns])
+    grado_nodo = np.array([G.out_degree[i] for i in range(len(G))])
     tamaños_nodo = 400 + (grado_nodo * 200)
     edge_widths = qbn_io.normalise_weights(qbn_io.edge_weights(G), 10)
 
@@ -132,7 +134,147 @@ def verGrafoCentralizado(G,df):
 
     sm = plt.cm.ScalarMappable(cmap=plt.cm.viridis, norm=plt.Normalize(vmin=values.min(), vmax=values.max()))
     sm.set_array([])
-    cbar = plt.colorbar(sm, ax=ax, font_size=15)
-    cbar.set_label('Influencia', font_size=15)
+    cbar = plt.colorbar(sm, ax=ax)
+    cbar.set_label('Centralidad de autovectores', font_size=15)
+    plt.title('Visualización de la matriz Insumo Producto')
+
+    plt.show()
+
+
+def verGrafoAbierto(df):
+    fig, ax = plt.subplots(figsize=(25, 25))
+    plt.axis("off")
+    G = nx.DiGraph()
+    N = len(df)
+
+    # Agrego nodos.
+    for i, col in enumerate(df.columns):
+        G.add_node(col)
+
+    grado_nodo = np.zeros(len(df))
+    for i in range(len(df)):
+        aristas = 0;
+        for j in range(len(df)):
+            if df.iloc[i, j] > 0.2:
+                aristas = aristas + 1
+        grado_nodo[i] = aristas
+    tamaños_nodo = 400 + (grado_nodo * 200)
+    edge_widths = []
+    for i in range(N):
+        for j in range(N):
+            a = df.iloc[i, j]
+            G.add_edge(df.columns[i], df.columns[j])
+            width = a
+            edge_widths.append(width)
+
+    pos_nodos = nx.spring_layout(G)
+    H = nx.DiGraph(df.to_numpy())
+    centrality = nx.eigenvector_centrality(H, max_iter=1000)
+    values = np.array(list(centrality.values()))
+    norm_values = (values - values.min()) / (values.max() - values.min())
+    colores_nodo = plt.cm.viridis(norm_values)
+
+    nx.draw_networkx_nodes(G,
+                           pos_nodos,
+                           node_color=colores_nodo,
+                           node_size=tamaños_nodo,
+                           edgecolors=colores_nodo,
+                           linewidths=10,
+                           alpha=0.6,
+                           ax=ax
+                           )
+
+    nx.draw_networkx_edges(G,
+                           pos_nodos,
+                           edge_color=colores_nodo,
+                           width=edge_widths,
+                           arrows=True,
+                           arrowsize=5,
+                           alpha=0.6,
+                           ax=ax,
+                           arrowstyle='->',
+                           node_size=10,
+                           connectionstyle='arc3,rad=0.15')
+
+    nx.draw_networkx_labels(G,
+                            pos_nodos,
+                            font_size=10,
+                            ax=ax
+                            )
+
+    sm = plt.cm.ScalarMappable(cmap=plt.cm.viridis, norm=plt.Normalize(vmin=values.min(), vmax=values.max()))
+    sm.set_array([])
+    cbar = plt.colorbar(sm, ax=ax)
+    cbar.set_label('Influencia', font_size=10)
+    plt.title('Grafo desenredado')
+
+    plt.show()
+
+
+def verInflacion(df, precios_finales, precios_iniciales):
+    fig, ax = plt.subplots(figsize=(25, 25))
+    plt.axis("off")
+
+    G = nx.DiGraph()
+    N = len(df)
+
+    # Agrego nodos.
+    for i, col in enumerate(df.columns):
+        G.add_node(col)
+    edge_colors = []
+    edge_widths = []
+    for i in range(N):
+        for j in range(N):
+            a = df.iloc[i, j]
+            G.add_edge(df.columns[i], df.columns[j])
+            width = a
+            edge_widths.append(width)
+
+    grado_nodo = np.array([G.out_degree[(sector)] for sector in df.columns])
+    price_changes = np.array(precios_finales) - np.array(precios_iniciales)
+
+    max_change = max(price_changes)
+    min_change = min(price_changes)
+    norm_changes = (price_changes - min_change) / (max_change - min_change)
+
+    colors = plt.cm.Reds(norm_changes)
+    tamaños_nodo = 400 + (grado_nodo * 200)
+    tamaños_nodo.tolist()
+
+    pos_nodos = nx.spring_layout(G)
+
+    nx.draw_networkx_nodes(G,
+                           pos_nodos,
+                           node_color=colors,
+                           node_size=tamaños_nodo,
+                           edgecolors=colors,
+                           linewidths=10,
+                           alpha=1,
+                           ax=ax
+                           )
+
+    nx.draw_networkx_edges(G,
+                           pos_nodos,
+                           edge_color='gray',
+                           width=1,
+                           arrows=True,
+                           arrowsize=5,
+                           alpha=0.6,
+                           ax=ax,
+                           arrowstyle='->',
+                           node_size=10,
+                           connectionstyle='arc3,rad=0.15')
+
+    nx.draw_networkx_labels(G,
+                            pos_nodos,
+                            font_size=12,
+                            ax=ax
+                            )
+
+    sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=min_change, vmax=max_change))
+    sm.set_array([])
+    cbar = plt.colorbar(sm, ax=ax)
+    cbar.set_label('Variación de precios', font_size=10)
+    plt.title('Variación de la inflación en los sectores')
 
     plt.show()
