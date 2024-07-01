@@ -109,7 +109,7 @@ class Experimento:
       return {"id_grafo": hash(self.grafo), "step": self._curr_step, "metricas": self._metricas_evaluadas}
  
 
-def plot_inflaciones(inflaciones, aumento, umbral_label=0.5):
+def plot_inflaciones(inflaciones, sectores, aumento, umbral_label=0.5):
     fig, (ax,ax2) = plt.subplots(1,2,figsize=(22, 10))
     ax.set_title(f"Valor de la inflación en el tiempo, a partir de un shock de {aumento}% \n para todos los sectores.")
     ax.set_xlabel("Tiempo")

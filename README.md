@@ -1,6 +1,7 @@
 # Trabajo Práctico de MSSCAE 2024 
 
 [Diapositivas online](https://akielbowicz.github.io/tp-msscae-2024/diapositivas)
+Para ejecutar el [Notebook exposicion.ipynb](notebooks/exposicion.ipynb) online -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/akielbowicz/tp-msscae-2024/HEAD?labpath=notebooks%2Fexposicion.ipynb)
 
 # Como usar el repo
 
