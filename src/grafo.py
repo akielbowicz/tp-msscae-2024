@@ -76,12 +76,12 @@ def plot_grafo(grafo, labels=True, grande=False, node_data=True,):
           font_color="red",
           ax=ax,
       )
-
+    return fig
 
 # %%
 
 def verGrafoCentralizado(df):
-    ig, ax = plt.subplots(figsize=(40, 40))
+    fig, ax = plt.subplots(figsize=(40, 40))
     plt.axis("off")
     G = nx.DiGraph(df)
 
@@ -135,10 +135,11 @@ def verGrafoCentralizado(df):
     sm = plt.cm.ScalarMappable(cmap=plt.cm.viridis, norm=plt.Normalize(vmin=values.min(), vmax=values.max()))
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax)
-    cbar.set_label('Centralidad de autovectores', font_size=15)
+    cbar.set_label('Centralidad de autovectores', fontsize=15)
     plt.title('Visualización de la matriz Insumo Producto')
 
     plt.show()
+    return fig
 
 
 def verGrafoAbierto(df):
@@ -205,10 +206,11 @@ def verGrafoAbierto(df):
     sm = plt.cm.ScalarMappable(cmap=plt.cm.viridis, norm=plt.Normalize(vmin=values.min(), vmax=values.max()))
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax)
-    cbar.set_label('Influencia', font_size=10)
+    cbar.set_label('Influencia', fontsize=10)
     plt.title('Grafo desenredado')
 
     plt.show()
+    return fig
 
 
 def verInflacion(df, precios_finales, precios_iniciales):
@@ -274,7 +276,8 @@ def verInflacion(df, precios_finales, precios_iniciales):
     sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=plt.Normalize(vmin=min_change, vmax=max_change))
     sm.set_array([])
     cbar = plt.colorbar(sm, ax=ax)
-    cbar.set_label('Variación de precios', font_size=10)
+    cbar.set_label('Variación de precios', fontsize=10)
     plt.title('Variación de la inflación en los sectores')
 
     plt.show()
+    return fig
