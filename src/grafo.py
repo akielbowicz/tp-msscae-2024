@@ -281,3 +281,55 @@ def verInflacion(df, precios_finales, precios_iniciales):
 
     plt.show()
     return fig
+
+def graficar_dist_grados(G, columns):
+    grados_in = G.in_degree
+    grados_out = G.out_degree
+    nodos= []
+    grado_salida = []
+    grado_entrada = []
+    j=0
+    for sector in columns:
+        nodos.append(j)
+        j+=1
+        grado_salida.append(grados_out[sector])
+        grado_entrada.append(grados_in[sector])
+        
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+    
+    axes[0].bar(nodos, grado_salida, color ='blue')
+    axes[0].set_xlabel('Sectores Productivos (Índice)')
+    axes[0].set_ylabel('Grado de salida')
+    axes[0].set_title('Distribución de grado de salida')
+    print(f'Media del Grado de salida:' + str(np.mean(grado_salida)))
+    print(f'Desvio del Grado de salida:' + str(np.var(grado_salida)))
+    
+    axes[1].bar(nodos, grado_entrada, color ='red')
+    axes[1].set_xlabel('Sectores Productivos (Índice)')
+    axes[1].set_ylabel('Grado de entrada')
+    axes[1].set_title('Distribución de grado de entrada')
+    
+    print(f'Media del Grado de entrada:' + str(np.mean(grado_entrada)))
+    print(f'Desvio del Grado de entrada:' + str(np.var(grado_entrada)))
+    return fig
+
+def graficar_dist_centralidad(G, columns):
+    centrality = nx.eigenvector_centrality(G, max_iter=1000) 
+    values = list(centrality.values())
+    
+    centralidad = []
+    nodos_nombre = []
+    j = 0
+    for sector in columns:
+        nodos_nombre.append(sector)
+        centralidad.append(values[j])
+        j +=1
+    
+    fig = plt.figure(figsize=(20, 10))  # Ancho 20, Alto 10
+    plt.bar(nodos_nombre, centralidad, color='yellow')
+    plt.xticks(rotation=90)
+    plt.title('Centralidad de Autovectores por Sector')
+    plt.xlabel('Sectores')
+    plt.ylabel('Centralidad de Autovectores')
+    plt.tight_layout()
+    return fig

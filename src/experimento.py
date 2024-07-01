@@ -1,6 +1,8 @@
 
 import queue
 import networkx as nx
+import matplotlib.pyplot as plt
+import numpy as np
 
 def ejemplo(str):
     return f"Esto es una función de ejemplo: {str}"
@@ -107,3 +109,64 @@ class Experimento:
       return {"id_grafo": hash(self.grafo), "step": self._curr_step, "metricas": self._metricas_evaluadas}
  
 
+def plot_inflaciones(inflaciones, aumento, umbral_label=0.5):
+    fig, (ax,ax2) = plt.subplots(1,2,figsize=(22, 10))
+    ax.set_title(f"Valor de la inflación en el tiempo, a partir de un shock de {aumento}% \n para todos los sectores.")
+    ax.set_xlabel("Tiempo")
+    ax.set_ylabel("Porcentaje de inflación")
+    ax2.set_title(f"Variación de la inflación en el tiempo, a partir de un shock de {aumento}%, \n para todos los sectores.")
+    ax2.set_xlabel("Tiempo")
+    ax2.set_ylabel("Variación en el porcentaje de inflación")
+    for i, inflacion in enumerate(inflaciones):
+        tiempo = range(0,len(inflacion))
+        if (max(inflacion) > umbral_label):
+            ax.plot(tiempo, inflacion, label=sectores[i])
+            ax2.plot(tiempo[1:],np.diff(inflacion), label=sectores[i])
+        else:
+            ax.plot(tiempo, inflacion)
+            ax2.plot(tiempo[1:],np.diff(inflacion))
+    ax.legend()
+    ax2.legend()
+    # plt.show()
+    return fig
+
+def verEvolucion(df, alfa):
+    df = df.T
+    df_diff = df.diff().dropna()
+    window_size = 5  # Tamaño de la ventana para la media móvil
+    df['mean'] = df.mean(axis=1).rolling(window=window_size).mean()
+    df['max'] = df.max(axis=1)
+    df['min'] = df.min(axis=1)
+    df_diff['mean_diff'] = df_diff.mean(axis=1).rolling(window=window_size).mean()
+    df_diff['max_diff'] = df_diff.max(axis=1)
+    df_diff['min_diff'] = df_diff.min(axis=1)
+    
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+    a = len(df)//10
+    
+    # Gráfico para datos absolutos
+    axes[0].fill_between(df.index, df['min'], df['max'], color='red', alpha=0.3, label='Rango (Mín-Máx)')
+    axes[0].plot(df.index, df['mean'], color='red', linewidth=2, label='Media Móvil')
+    axes[0].set_title(f'Inflación Absoluta en 123 simulaciones para {alfa}')
+    axes[0].set_xlabel('Tiempo en cantidad de iteraciones')
+    axes[0].set_ylabel('Inflación absoluta')
+    axes[0].set_xticks(df.index[::a])
+    axes[0].legend()
+
+    
+    # Gráfico para diferencias de inflación
+    axes[1].fill_between(df_diff.index, df_diff['min_diff'], df_diff['max_diff'], color='red', alpha=0.3, label='Rango (Mín-Máx)')
+    axes[1].plot(df_diff.index, df_diff['mean_diff'], color='red', linewidth=2, label='Media Móvil')
+    axes[1].set_title(f'Variación de inflación en 123 simulaciones para {alfa}')
+    axes[1].set_xlabel('Tiempo en cantidad de iteraciones')
+    axes[1].set_ylabel('Variación de Inflación')
+    axes[1].set_xticks(df_diff.index[::a])
+    axes[1].legend()
+
+    
+    # Ajustar el layout
+    plt.tight_layout()
+    
+    # Mostrar los gráficos
+    # plt.show()
+    return fig
