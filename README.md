@@ -43,3 +43,10 @@ Para exportar a PDF es necesario tener un motor de [`TeX`](https://nbconvert.rea
 jupyter nbconvert ./notebooks/exposicion.ipynb --to pdf --output-dir docs/diapositivas
 ```
 
+### Cómo generar el reporte en PDF
+
+Usando el template de [report](https://nbconvert.readthedocs.io/en/latest/usage.html?highlight=report#latex) que arma el TOC
+
+```shell
+jupyter nbconvert ./notebooks/exposicion-tp-entrega.ipynb --to pdf --output-dir docs/diapositivas --template-file ./.venv/share/jupyter/nbconvert/templates/latex/report.tex.j2
+```
