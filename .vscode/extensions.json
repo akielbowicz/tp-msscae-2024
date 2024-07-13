@@ -4,6 +4,7 @@
         "christian-kohler.path-intellisense",
         "ms-toolsai.jupyter",
         "yzane.markdown-pdf",
-        "davidanson.vscode-markdownlint"
+        "davidanson.vscode-markdownlint",
+        "ms-python.black-formatter"
     ]
 }
